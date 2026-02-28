@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Ultimate Birthday Surprise 🎉</title>
+<style>
+body{
+    margin:0;
+    padding:0;
+    text-align:center;
+    font-family:Arial;
+    background:linear-gradient(45deg,#ff758c,#ff7eb3);
+    color:white;
+    overflow:hidden;
+}
+h1{
+    margin-top:60px;
+    font-size:40px;
+}
+.cake{
+    font-size:90px;
+    animation:bounce 1.5s infinite;
+}
+@keyframes bounce{
+    0%,100%{transform:translateY(0)}
+    50%{transform:translateY(-20px)}
+}
+button{
+    padding:12px 25px;
+    font-size:18px;
+    border:none;
+    border-radius:25px;
+    margin:10px;
+    cursor:pointer;
+}
+.romantic{background:#ff4081;color:white;}
+.funny{background:#ff9800;color:white;}
+#message{
+    font-size:22px;
+    margin-top:20px;
+    display:none;
+}
+canvas{
+    position:absolute;
+    top:0;
+    left:0;
+}
+</style>
+</head>
+
+<body>
+
+<h1 id="title">🎉 Happy Birthday 🎉</h1>
+<div class="cake">🎂</div>
+
+<button class="romantic" onclick="romanticWish()">Romantic Mode 💌</button>
+<button class="funny" onclick="funnyWish()">Funny Mode 😂</button>
+
+<div id="message"></div>
+
+<audio id="music">
+<source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+</audio>
+
+<canvas id="fireworks"></canvas>
+
+<script>
+
+// Name Input
+let name = prompt("Enter Birthday Person Name:");
+if(name){
+    document.getElementById("title").innerHTML =
+    "🎉 Happy Birthday " + name + " 🎉";
+}
+
+// Romantic Mode
+function romanticWish(){
+    let msg="You are the most special person in my life 💖<br>May your smile shine forever ✨";
+    showMessage(msg);
+}
+
+// Funny Mode
+function funnyWish(){
+    let msg="Congratulations! You are now officially older 😂<br>But still not mature 🤣🎉";
+    showMessage(msg);
+}
+
+function showMessage(text){
+    document.getElementById("message").innerHTML=text;
+    document.getElementById("message").style.display="block";
+    document.getElementById("music").play();
+    launchFireworks();
+}
+
+// Balloons
+for(let i=0;i<15;i++){
+    let b=document.createElement("div");
+    b.style.position="absolute";
+    b.style.bottom="-100px";
+    b.style.left=Math.random()*100+"vw";
+    b.style.width="40px";
+    b.style.height="60px";
+    b.style.background="hsl("+Math.random()*360+",70%,60%)";
+    b.style.borderRadius="50%";
+    b.style.animation="float "+(3+Math.random()*5)+"s infinite";
+    document.body.appendChild(b);
+}
+let style=document.createElement('style');
+style.innerHTML=`@keyframes float{
+0%{transform:translateY(0)}
+100%{transform:translateY(-900px)}
+}`;
+document.head.appendChild(style);
+
+// Fireworks
+const canvas=document.getElementById("fireworks");
+const ctx=canvas.getContext("2d");
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+function launchFireworks(){
+    for(let i=0;i<100;i++){
+        setTimeout(()=>createParticle(),i*20);
+    }
+}
+
+function createParticle(){
+    let x=Math.random()*canvas.width;
+    let y=Math.random()*canvas.height/2;
+    let radius=3;
+    let color="hsl("+Math.random()*360+",100%,60%)";
+    ctx.beginPath();
+    ctx.arc(x,y,radius,0,Math.PI*2);
+    ctx.fillStyle=color;
+    ctx.fill();
+}
+
+</script>
+</body>
+</html>
